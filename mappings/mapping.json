@@ -17,6 +17,18 @@
       "response": {
         "body": "Updated"
       }
+    },
+    {
+      "request": {
+        "url": "/soap"
+      },
+      "response": {
+		"status": 200,
+        "bodyFileName": "response.xml",
+        "headers": {
+          "Content-Type": "application/soap+xml; charset=utf-8"
+        }
+      }
     }
   ]
 }
