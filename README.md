@@ -5,6 +5,7 @@
 - Running the wiremock server as standalone
 
 ```sh
+java -jar wiremock.jar --port 8088 --verbose
 ```
 
 - Create a `mapping.json` file, put in my mock project `mappings` folder
@@ -16,4 +17,3 @@
 
 ```xml
 ```
-

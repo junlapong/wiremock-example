@@ -20,11 +20,23 @@
     },
     {
       "request": {
-        "url": "/soap"
+        "url": "/BAY.KOL.WebService.PROD/AuthenService.asmx"
+      },
+      "response": {
+    "status": 200,
+        "bodyFileName": "kol_response.xml",
+        "headers": {
+          "Content-Type": "application/soap+xml; charset=utf-8"
+        }
+      }
+    },
+    {
+      "request": {
+        "url": "/BAY.KOL.Corp.WebService.UAT9/AuthenService.asmx"
       },
       "response": {
 		"status": 200,
-        "bodyFileName": "response.xml",
+        "bodyFileName": "kbol_response.xml",
         "headers": {
           "Content-Type": "application/soap+xml; charset=utf-8"
         }
