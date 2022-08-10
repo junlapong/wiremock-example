@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+ 
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.github.junlapong.wiremock-example</groupId>
+  <artifactId>wiremock-example</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>wiremock-example</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <slf4j.version>1.7.36</slf4j.version>
+    <wiremock.version>2.33.2</wiremock.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.tomakehurst</groupId>
+      <artifactId>wiremock-jre8-standalone</artifactId>
+      <version>${wiremock.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+      <!-- mvn exec:java -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.1</version>
+				<configuration>
+					<mainClass>com.github.tomakehurst.wiremock.standalone.WireMockServerRunner</mainClass>
+					<arguments>
+						<argument>--disable-banner</argument>
+            <argument>--port</argument>
+            <argument>8088</argument>
+            <argument>--verbose</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+
+      <!-- mvn package -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<descriptorRefs>
+					  <descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+					  <manifest>
+						<mainClass>com.github.tomakehurst.wiremock.standalone.WireMockServerRunner</mainClass>
+					  </manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>assemble-all</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+      <!-- mvn dependency:copy -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.2</version>
+        <configuration>
+          <artifactItems>
+            <artifactItem>
+              <groupId>com.github.tomakehurst</groupId>
+              <artifactId>wiremock-jre8-standalone</artifactId>
+              <version>${wiremock.version}</version>
+              <type>jar</type>
+              <overWrite>true</overWrite>
+              <destFileName>wiremock-jre8-standalone.jar</destFileName>
+            </artifactItem>
+            <artifactItem>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-api</artifactId>
+              <version>${slf4j.version}</version>
+              <type>jar</type>
+              <overWrite>true</overWrite>
+              <destFileName>slf4j-api.jar</destFileName>
+            </artifactItem>
+            <artifactItem>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-simple</artifactId>
+              <version>${slf4j.version}</version>
+              <type>jar</type>
+              <overWrite>true</overWrite>
+              <destFileName>slf4j-simple.jar</destFileName>
+            </artifactItem>
+          </artifactItems>
+          <outputDirectory>${project.basedir}/lib</outputDirectory>
+          <overWriteReleases>true</overWriteReleases>
+          <overWriteSnapshots>true</overWriteSnapshots>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
